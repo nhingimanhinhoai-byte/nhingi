@@ -1,67 +1,86 @@
 <!doctype html>
-<html lang="en">
+<html lang="vi">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NhinGi ICT</title>
-<style>
-:root{
-  --bg:#081018; --panel:#0f1b26; --text:#eef7fb; --muted:#9db1bf;
-  --cyan:#22d3ee; --gold:#f6c453; --line:#1e3342;
-}
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#071018,#0b1520);color:var(--text);line-height:1.6}
-.wrap{max-width:920px;margin:auto;padding:28px 20px 56px}
-nav{display:flex;gap:18px;flex-wrap:wrap;align-items:center;padding:14px 0 24px;border-bottom:1px solid var(--line)}
-nav .brand{font-weight:700;color:var(--gold);margin-right:auto}
-nav a{color:var(--cyan);text-decoration:none}
-.hero{padding:64px 0 36px}
-h1{font-size:42px;line-height:1.1;margin:0 0 16px}
-h2{margin-top:36px;color:var(--gold)}
-p,li{color:var(--text)}
-.muted{color:var(--muted)}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;margin:20px 0}
-.btn{display:inline-block;background:var(--cyan);color:#06202a;text-decoration:none;font-weight:700;padding:11px 16px;border-radius:10px;margin-right:8px}
-footer{margin-top:48px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
-code{background:#0a131b;padding:2px 6px;border-radius:6px}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0c1721">
+  <title>License Ledger — Quản lý license offline</title>
+  <style>
+    :root { --ink:#eff7fb; --muted:#95a9b8; --bg:#08131c; --panel:#101f2b; --panel-2:#142938; --line:#274252; --cyan:#4ed8e9; --gold:#ffc85d; --green:#53d497; --orange:#ffad60; --red:#ff7781; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-width:320px; background:radial-gradient(circle at 0 0,#173449 0,transparent 30rem),var(--bg); color:var(--ink); font:15px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    button,input,select,textarea { font:inherit; }
+    button { cursor:pointer; }
+    .shell { max-width:1240px; margin:auto; padding:30px 24px 56px; }
+    header { display:flex; justify-content:space-between; align-items:center; gap:24px; padding-bottom:28px; border-bottom:1px solid var(--line); }
+    .brand { display:flex; gap:13px; align-items:center; font-weight:800; font-size:20px; letter-spacing:-.02em; }
+    .brand-mark { display:grid; place-items:center; width:37px; height:37px; border-radius:11px; color:#09202b; background:var(--cyan); box-shadow:0 0 28px #4ed8e944; }
+    .brand small { display:block; margin-top:1px; color:var(--muted); font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; }
+    .offline { display:flex; gap:8px; align-items:center; color:var(--muted); font-size:13px; }
+    .offline::before { content:""; width:8px; height:8px; border-radius:50%; background:var(--green); box-shadow:0 0 0 4px #53d4971f; }
+    .intro { display:flex; align-items:end; justify-content:space-between; gap:30px; margin:38px 0 25px; }
+    h1 { margin:0 0 8px; font-size:clamp(28px,4vw,42px); letter-spacing:-.045em; line-height:1.08; }
+    .intro p { margin:0; color:var(--muted); }
+    .primary, .secondary, .icon-button { border:0; border-radius:10px; font-weight:750; transition:transform .15s,background .15s; }
+    .primary { padding:12px 16px; color:#06202a; background:var(--cyan); box-shadow:0 8px 22px #4ed8e926; }
+    .primary:hover, .secondary:hover, .icon-button:hover { transform:translateY(-1px); }
+    .secondary { padding:10px 13px; color:var(--ink); border:1px solid var(--line); background:transparent; }
+    .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:15px; margin-bottom:27px; }
+    .stat, .form-card, .table-card { background:linear-gradient(145deg,#112330,#0e1b26); border:1px solid var(--line); border-radius:16px; }
+    .stat { padding:20px; }
+    .stat b { display:block; margin-top:5px; font-size:28px; letter-spacing:-.04em; }
+    .stat span { color:var(--muted); font-size:13px; }
+    .stat:nth-child(1) b { color:var(--cyan); }.stat:nth-child(2) b { color:var(--gold); }.stat:nth-child(3) b { color:var(--green); }
+    .workspace { display:grid; grid-template-columns:minmax(270px,360px) 1fr; gap:22px; align-items:start; }
+    .form-card { position:sticky; top:20px; padding:23px; }
+    h2 { margin:0; font-size:18px; letter-spacing:-.02em; }.form-card > p { margin:5px 0 21px; color:var(--muted); font-size:13px; }
+    label { display:block; margin:0 0 6px; color:#c4d4dd; font-size:13px; font-weight:650; }
+    input,select,textarea { width:100%; color:var(--ink); outline:none; border:1px solid var(--line); border-radius:9px; padding:10px 11px; background:#091721; }
+    input:focus,select:focus,textarea:focus { border-color:var(--cyan); box-shadow:0 0 0 3px #4ed8e91c; }
+    textarea { resize:vertical; min-height:70px; }.field { margin-bottom:15px; }.field-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .form-card .primary { width:100%; margin-top:5px; }.help { margin:14px 0 0; color:var(--muted); font-size:12px; }
+    .table-card { overflow:hidden; }.toolbar { display:flex; gap:12px; justify-content:space-between; align-items:center; padding:17px 19px; border-bottom:1px solid var(--line); }
+    .search { position:relative; flex:1; max-width:330px; }.search span { position:absolute; left:11px; top:9px; color:var(--muted); }.search input { padding-left:34px; }
+    .tools { display:flex; gap:8px; }.icon-button { padding:9px 11px; color:var(--muted); background:#172c3a; }.icon-button:hover { color:var(--ink); background:#203a4b; }
+    .table-wrap { overflow:auto; } table { width:100%; border-collapse:collapse; min-width:710px; } th { padding:12px 19px; color:var(--muted); background:#0d1b25; text-align:left; font-size:11px; font-weight:700; letter-spacing:.065em; text-transform:uppercase; } td { padding:16px 19px; border-top:1px solid #1d3443; vertical-align:middle; } tr.data-row { cursor:pointer; }tr.data-row:hover td { background:#17304066; }.account { color:var(--cyan); font-weight:800; }.broker { color:#d3e2e9; }.count { color:var(--gold); font-weight:800; }.date { white-space:nowrap; }.note { max-width:155px; overflow:hidden; color:var(--muted); text-overflow:ellipsis; white-space:nowrap; }.badge { display:inline-flex; align-items:center; gap:6px; padding:4px 8px; border-radius:999px; font-size:12px; font-weight:750; white-space:nowrap; }.badge::before { content:""; width:6px; height:6px; border-radius:50%; }.active { color:var(--green); background:#53d49717; }.active::before { background:var(--green); }.soon { color:var(--orange); background:#ffad6017; }.soon::before { background:var(--orange); }.expired { color:var(--red); background:#ff778117; }.expired::before { background:var(--red); }.empty { padding:54px 20px; text-align:center; color:var(--muted); }.empty b { display:block; color:var(--ink); font-size:17px; }.footer-note { margin:17px 0 0; color:var(--muted); font-size:12px; text-align:right; }
+    dialog { width:min(710px,calc(100% - 28px)); max-height:88vh; padding:0; color:var(--ink); background:#10212d; border:1px solid #365466; border-radius:17px; box-shadow:0 24px 80px #000b; }.dialog-head { display:flex; justify-content:space-between; align-items:start; padding:23px 25px 18px; border-bottom:1px solid var(--line); }.dialog-head p { margin:4px 0 0; color:var(--muted); }.close { font-size:20px; line-height:1; }.history { padding:0 25px 20px; }.history-item { display:grid; grid-template-columns:32px 1fr auto; gap:13px; align-items:center; padding:17px 0; border-bottom:1px solid #203947; }.history-number { display:grid; place-items:center; width:29px; height:29px; border-radius:50%; color:#0a1e29; background:var(--gold); font-size:12px; font-weight:900; }.history-info b { display:block; }.history-info span { color:var(--muted); font-size:13px; }.history-note { margin-top:3px; color:#b5c7d1; font-size:13px; }.modal-actions { display:flex; justify-content:flex-end; gap:9px; padding:17px 25px; border-top:1px solid var(--line); }
+    @media (max-width:850px) { .workspace { grid-template-columns:1fr; }.form-card { position:static; }.intro { align-items:start; flex-direction:column; }.stats { gap:10px; }.stat { padding:15px; } }
+    @media (max-width:520px) { .shell { padding:20px 14px 38px; } header { padding-bottom:20px; }.offline { display:none; }.stats { grid-template-columns:1fr; }.field-grid { grid-template-columns:1fr; }.toolbar { align-items:stretch; flex-direction:column; }.search { max-width:none; }.tools { justify-content:flex-end; }.history-item { grid-template-columns:30px 1fr; }.history-item > .badge { grid-column:2; justify-self:start; }.dialog-head,.history,.modal-actions { padding-left:17px; padding-right:17px; } }
+  </style>
 </head>
-<body><div class="wrap">
-
-<nav>
-  <div class="brand">NhinGi ICT</div>
-  <a href="index.html">Home</a>
-  <a href="privacy.html">Privacy Policy</a>
-  <a href="terms.html">Terms of Service</a>
-</nav>
-
-<section class="hero">
-  <p class="muted">Desktop publishing workflow</p>
-  <h1>NhinGi ICT</h1>
-  <p>NhinGi_ICT is a desktop application that creates short trading-chart videos and, when the user authorizes it, sends those videos to the user's own social-media account for review and posting.</p>
-  <p>The workflow is designed for the account owner to publish their own chart recordings. It does not provide investment guarantees and it does not make trades on behalf of viewers.</p>
-  <a class="btn" href="https://t.me/NAS100ICTSignalsAsiaLondon">Free Telegram Signals</a>
-</section>
-
-<div class="card">
-  <h2>What the app does</h2>
-  <ul>
-    <li>Creates short-form videos from the user's own trading chart recordings.</li>
-    <li>Formats videos for vertical platforms such as TikTok and YouTube Shorts.</li>
-    <li>Uses platform authorization only after the account owner gives permission.</li>
-    <li>Uploads to the user's own authorized account for review/posting.</li>
-  </ul>
-</div>
-
-<div class="card">
-  <h2>Important notice</h2>
-  <p>Content shown by NhinGi ICT is for informational and record-keeping purposes only and is not financial, investment, legal, or tax advice. Trading involves risk.</p>
-</div>
-
-
-<footer>
-  <div>NhinGi ICT • Desktop video publishing workflow</div>
-  <div>Contact: <a href="mailto:nhingimanhinhoai@gmail.com" style="color:#22d3ee">nhingimanhinhoai@gmail.com</a></div>
-</footer>
-
-</div></body></html>
+<body>
+  <main class="shell">
+    <header><div class="brand"><div class="brand-mark">◆</div><div>License Ledger<small>Personal edition</small></div></div><div class="offline">Dữ liệu chỉ lưu trên thiết bị này</div></header>
+    <section class="intro"><div><h1>Quản lý license, rõ ràng từng lần cấp.</h1><p>Theo dõi khách hàng và toàn bộ lịch sử gia hạn của họ — hoàn toàn offline.</p></div><button class="primary" id="focus-form">+ Cấp license mới</button></section>
+    <section class="stats" aria-label="Tổng quan"><div class="stat"><span>Tổng khách hàng</span><b id="customer-total">0</b></div><div class="stat"><span>Tổng license đã cấp</span><b id="license-total">0</b></div><div class="stat"><span>Tổng số ngày đã bán</span><b id="days-total">0</b></div></section>
+    <section class="workspace">
+      <form class="form-card" id="license-form"><h2>Cấp license mới</h2><p>Mỗi lần cấp sẽ được lưu vào lịch sử của Account.</p><div class="field"><label for="account">MT5 Account</label><input id="account" name="account" inputmode="numeric" autocomplete="off" placeholder="Ví dụ: 20423957" required></div><div class="field"><label for="broker">Broker</label><input id="broker" name="broker" autocomplete="off" placeholder="Ví dụ: Vantage" required></div><div class="field-grid"><div class="field"><label for="start-date">Ngày bắt đầu</label><input id="start-date" name="startDate" type="date" required></div><div class="field"><label for="duration">Số ngày</label><select id="duration" name="days"><option value="1">1 ngày</option><option value="30">30 ngày</option><option value="90">90 ngày</option><option value="180" selected>180 ngày</option><option value="365">365 ngày</option></select></div></div><div class="field"><label for="note">Ghi chú <span style="color:var(--muted);font-weight:400">(tùy chọn)</span></label><textarea id="note" name="note" placeholder="Ví dụ: Gói 6 tháng"></textarea></div><button class="primary" type="submit">Lưu lần cấp license</button><p class="help">Ngày hết hạn được tính tự động từ ngày bắt đầu + số ngày.</p></form>
+      <div><section class="table-card"><div class="toolbar"><div class="search"><span>⌕</span><input id="search" type="search" placeholder="Tìm Account hoặc Broker..."></div><div class="tools"><button class="icon-button" id="export-btn" title="Tải bản sao lưu">⇩ Backup</button><label class="icon-button" title="Khôi phục từ bản sao lưu">⇧ Khôi phục<input id="import-input" type="file" accept="application/json" hidden></label></div></div><div class="table-wrap"><table><thead><tr><th>Account</th><th>Broker</th><th>Số lần cấp</th><th>Lần gần nhất</th><th>Hạn hiện tại</th><th>Trạng thái</th></tr></thead><tbody id="license-list"></tbody></table></div><div class="empty" id="empty-state" hidden><b>Chưa có license nào</b>Thêm lần cấp đầu tiên bằng biểu mẫu bên trái.</div></section><p class="footer-note">Nhấp vào một Account để xem lịch sử cấp license.</p></div>
+    </section>
+  </main>
+  <dialog id="history-dialog"><div class="dialog-head"><div><h2 id="dialog-title">Lịch sử license</h2><p id="dialog-subtitle"></p></div><button class="icon-button close" id="close-dialog" aria-label="Đóng">×</button></div><div class="history" id="history-list"></div><div class="modal-actions"><button class="secondary" id="close-dialog-bottom">Đóng</button></div></dialog>
+  <script>
+    const storageKey = 'license-ledger-records-v1';
+    const $ = selector => document.querySelector(selector);
+    const today = new Date();
+    const isoToday = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+    $('#start-date').value = isoToday;
+    let records = JSON.parse(localStorage.getItem(storageKey) || '[]');
+    const save = () => localStorage.setItem(storageKey, JSON.stringify(records));
+    const formatDate = date => new Intl.DateTimeFormat('vi-VN').format(new Date(`${date}T00:00:00`));
+    const endDate = (start, days) => { const d = new Date(`${start}T00:00:00`); d.setDate(d.getDate() + Number(days)); return d.toISOString().slice(0, 10); };
+    const status = expiry => { const remaining = Math.ceil((new Date(`${expiry}T00:00:00`) - new Date(`${isoToday}T00:00:00`)) / 86400000); return remaining < 0 ? ['Hết hạn', 'expired'] : remaining <= 7 ? ['Sắp hết hạn', 'soon'] : ['Đang hoạt động', 'active']; };
+    const escapeHtml = value => String(value).replace(/[&<>'"]/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[character]));
+    function grouped() { const map = new Map(); records.forEach(record => { const key = `${record.account.toLowerCase()}|${record.broker.toLowerCase()}`; if (!map.has(key)) map.set(key, { account:record.account, broker:record.broker, entries:[] }); map.get(key).entries.push(record); }); return [...map.values()].map(group => ({...group, entries:group.entries.sort((a,b) => b.startDate.localeCompare(a.startDate))})).sort((a,b) => b.entries[0].startDate.localeCompare(a.entries[0].startDate)); }
+    function render() { const query = $('#search').value.trim().toLowerCase(); const groups = grouped().filter(g => `${g.account} ${g.broker}`.toLowerCase().includes(query)); const tbody = $('#license-list'); tbody.innerHTML = groups.map(group => { const latest = group.entries[0]; const [label, style] = status(latest.expiry); return `<tr class="data-row" data-key="${escapeHtml(group.account)}|${escapeHtml(group.broker)}"><td class="account">${escapeHtml(group.account)}</td><td class="broker">${escapeHtml(group.broker)}</td><td class="count">${group.entries.length}</td><td class="date">${formatDate(latest.startDate)}</td><td class="date">${formatDate(latest.expiry)}</td><td><span class="badge ${style}">${label}</span></td></tr>`; }).join(''); $('#empty-state').hidden = groups.length !== 0; const customers = grouped(); $('#customer-total').textContent = customers.length; $('#license-total').textContent = records.length; $('#days-total').textContent = records.reduce((sum, item) => sum + Number(item.days), 0).toLocaleString('vi-VN'); }
+    $('#license-form').addEventListener('submit', event => { event.preventDefault(); const data = new FormData(event.currentTarget); const account = data.get('account').trim(); const broker = data.get('broker').trim(); if (!account || !broker) return; records.push({ id:crypto.randomUUID(), account, broker, startDate:data.get('startDate'), days:Number(data.get('days')), note:data.get('note').trim(), expiry:endDate(data.get('startDate'), data.get('days')) }); save(); event.currentTarget.reset(); $('#start-date').value = isoToday; $('#duration').value = '180'; render(); });
+    $('#search').addEventListener('input', render); $('#focus-form').addEventListener('click', () => { $('#account').focus(); document.querySelector('.form-card').scrollIntoView({ behavior:'smooth', block:'center' }); });
+    const dialog = $('#history-dialog');
+    $('#license-list').addEventListener('click', event => { const row = event.target.closest('.data-row'); if (!row) return; const [account, broker] = row.dataset.key.split('|'); const group = grouped().find(item => item.account === account && item.broker === broker); $('#dialog-title').textContent = `Account ${group.account}`; $('#dialog-subtitle').textContent = `${group.broker} · ${group.entries.length} lần cấp license`; $('#history-list').innerHTML = group.entries.map((entry, index) => { const [label, style] = status(entry.expiry); return `<div class="history-item"><span class="history-number">${group.entries.length-index}</span><div class="history-info"><b>${formatDate(entry.startDate)} · ${entry.days} ngày</b><span>Hết hạn: ${formatDate(entry.expiry)}</span>${entry.note ? `<div class="history-note">${escapeHtml(entry.note)}</div>` : ''}</div><span class="badge ${style}">${label}</span></div>`; }).join(''); dialog.showModal(); });
+    const closeDialog = () => dialog.close(); $('#close-dialog').addEventListener('click', closeDialog); $('#close-dialog-bottom').addEventListener('click', closeDialog);
+    $('#export-btn').addEventListener('click', () => { const blob = new Blob([JSON.stringify({ app:'License Ledger', exportedAt:new Date().toISOString(), records }, null, 2)], {type:'application/json'}); const link = Object.assign(document.createElement('a'), { href:URL.createObjectURL(blob), download:`license-ledger-backup-${isoToday}.json` }); link.click(); URL.revokeObjectURL(link.href); });
+    $('#import-input').addEventListener('change', async event => { const file = event.target.files[0]; if (!file) return; try { const data = JSON.parse(await file.text()); if (!Array.isArray(data.records)) throw new Error('invalid'); if (!confirm(`Khôi phục ${data.records.length} license từ bản sao lưu? Dữ liệu hiện tại sẽ được thay thế.`)) return; records = data.records; save(); render(); } catch { alert('Tệp backup không hợp lệ. Vui lòng chọn tệp JSON được tạo bởi License Ledger.'); } finally { event.target.value = ''; } });
+    render();
+  </script>
+</body>
+</html>
